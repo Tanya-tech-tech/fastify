@@ -1,13 +1,19 @@
 'use strict'
 
-const path = require('node:path')
+const path = require('path')
 const AutoLoad = require('@fastify/autoload')
-
-// Pass --options via CLI arguments in command to enable these options.
-const options = {}
+const fastifyStatic = require('@fastify/static');
 
 module.exports = async function (fastify, opts) {
   // Place here your custom code!
+
+  fastify.register(fastifyStatic, {
+    root: `${process.cwd()}/my-app/build`,
+  });
+
+  fastify.setNotFoundHandler((req, res) => {
+    res.sendFile('index.html');
+  });
 
   // Do not touch the following lines
 
@@ -17,14 +23,14 @@ module.exports = async function (fastify, opts) {
   fastify.register(AutoLoad, {
     dir: path.join(__dirname, 'plugins'),
     options: Object.assign({}, opts)
-  })
+  });
 
   // This loads all plugins defined in routes
   // define your routes in one of these
   fastify.register(AutoLoad, {
     dir: path.join(__dirname, 'routes'),
     options: Object.assign({}, opts)
-  })
+  });
 }
 
-module.exports.options = options
+//export const options = options
