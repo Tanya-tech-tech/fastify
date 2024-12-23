@@ -13,7 +13,7 @@
     "test": "node --test test/**/*.test.js",
     "start": "fastify start -l info app.js",
     "dev": "fastify start -w -l info -P app.js",
-    "build": "npm run build --prefix my-app"
+    "build": "npm run build --prefix react-test"
   },
   "keywords": [],
   "author": "",
